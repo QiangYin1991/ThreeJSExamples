@@ -81,10 +81,22 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./js/three.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js/fallenBall.js");
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./js/fallenBall.js":
+/*!**************************!*\
+  !*** ./js/fallenBall.js ***!
+  \**************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var _stats_min__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stats.min */ \"./js/stats.min.js\");\n/* harmony import */ var _stats_min__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_stats_min__WEBPACK_IMPORTED_MODULE_1__);\n/*\n * @Description: Fallen ball\n * @Author: QiangYin\n * @Date: 2018-10-17 11:26:54\n * @LastEditTime: 2018-10-17 13:11:34\n * @LastEditors: your name\n */\n\n\n\nconst container = document.getElementById('ThreeJS');\nconst scene = new three__WEBPACK_IMPORTED_MODULE_0__[\"Scene\"]();\nconst camera = new three__WEBPACK_IMPORTED_MODULE_0__[\"PerspectiveCamera\"](75, window.innerWidth / window.innerHeight, 0.1, 1000);\n//const camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);\nconst renderer = new three__WEBPACK_IMPORTED_MODULE_0__[\"WebGLRenderer\"]();\nconst stat = new _stats_min__WEBPACK_IMPORTED_MODULE_1__();\n\nlet id = null;\nlet ballMesh = null;\nlet ballRadius = 0.5;\n\nfunction init () {\n  /** init stat */\n  stat.domElement.style.position = 'absolute';\n  stat.domElement.style.right = '0px';\n  stat.domElement.style.top = '0px';\n  container.appendChild(stat.domElement);\n  \n  /** set camera */\n  //camera = new THREE.OrthographicCamera();\n  camera.position.set(5, 5, 10);\n  camera.lookAt(new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector3\"](0, 0, 0));\n  scene.add(camera);\n\n  /** set renderer */\n  renderer.setSize(window.innerWidth, window.innerHeight);\n  container.appendChild(renderer.domElement);\n\n  /** set ball */\n  ballMesh = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"](new three__WEBPACK_IMPORTED_MODULE_0__[\"SphereGeometry\"](ballRadius, 16, 8), \n                            new three__WEBPACK_IMPORTED_MODULE_0__[\"MeshLambertMaterial\"]({color: 0xffff00}));\n  ballMesh.position.y = ballRadius;\n  scene.add(ballMesh);\n\n  /** set plane */\n  three__WEBPACK_IMPORTED_MODULE_0__[\"ImageUtils\"].crossOrigin = '';\n  let texture = three__WEBPACK_IMPORTED_MODULE_0__[\"ImageUtils\"].loadTexture('img/checkerboard.jpg', {}, function () {\n    renderer.render(scene, camera);\n  });\n  // let loader = new THREE.TextureLoader();\n  // let texture = loader.load('img/checkerboard.jpg');\n  texture.wrapS = texture.wrapT = three__WEBPACK_IMPORTED_MODULE_0__[\"RepeatWrapping\"];\n  texture.repeat.set(4, 4);\n  let plane = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"](new three__WEBPACK_IMPORTED_MODULE_0__[\"PlaneGeometry\"](5, 5),\n                             new three__WEBPACK_IMPORTED_MODULE_0__[\"MeshLambertMaterial\"]({map:texture}));\n  plane.rotation.x = -Math.PI / 2;\n  scene.add(plane);\n\n  /** set light */\n  let light = new three__WEBPACK_IMPORTED_MODULE_0__[\"DirectionalLight\"](0xffffff);\n  light.position.set(10, 10, 15);\n  scene.add(light);\n\n  id = requestAnimationFrame(draw);\n};\n\nfunction draw () {\n  stat.begin();\n  renderer.render(scene, camera);\n  id = requestAnimationFrame(draw);\n  stat.end();\n};\n\nfunction stop () {\n  if (id !== null) {\n    cancelAnimationFrame(id);\n    id = null;\n  }\n};\n\ninit();\n\n//# sourceURL=webpack:///./js/fallenBall.js?");
+
+/***/ }),
 
 /***/ "./js/stats.min.js":
 /*!*************************!*\
@@ -94,18 +106,6 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("// stats.js - http://github.com/mrdoob/stats.js\n(function(f,e){ true?module.exports=e():undefined})(this,function(){var f=function(){function e(a){c.appendChild(a.dom);return a}function u(a){for(var d=0;d<c.children.length;d++)c.children[d].style.display=d===a?\"block\":\"none\";l=a}var l=0,c=document.createElement(\"div\");c.style.cssText=\"position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000\";c.addEventListener(\"click\",function(a){a.preventDefault();\n  u(++l%c.children.length)},!1);var k=(performance||Date).now(),g=k,a=0,r=e(new f.Panel(\"FPS\",\"#0ff\",\"#002\")),h=e(new f.Panel(\"MS\",\"#0f0\",\"#020\"));if(self.performance&&self.performance.memory)var t=e(new f.Panel(\"MB\",\"#f08\",\"#201\"));u(0);return{REVISION:16,dom:c,addPanel:e,showPanel:u,begin:function(){k=(performance||Date).now()},end:function(){a++;var c=(performance||Date).now();h.update(c-k,200);if(c>g+1E3&&(r.update(1E3*a/(c-g),100),g=c,a=0,t)){var d=performance.memory;t.update(d.usedJSHeapSize/\n  1048576,d.jsHeapSizeLimit/1048576)}return c},update:function(){k=this.end()},domElement:c,setMode:u}};f.Panel=function(e,f,l){var c=Infinity,k=0,g=Math.round,a=g(window.devicePixelRatio||1),r=80*a,h=48*a,t=3*a,v=2*a,d=3*a,m=15*a,n=74*a,p=30*a,q=document.createElement(\"canvas\");q.width=r;q.height=h;q.style.cssText=\"width:80px;height:48px\";var b=q.getContext(\"2d\");b.font=\"bold \"+9*a+\"px Helvetica,Arial,sans-serif\";b.textBaseline=\"top\";b.fillStyle=l;b.fillRect(0,0,r,h);b.fillStyle=f;b.fillText(e,t,v);\n  b.fillRect(d,m,n,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d,m,n,p);return{dom:q,update:function(h,w){c=Math.min(c,h);k=Math.max(k,h);b.fillStyle=l;b.globalAlpha=1;b.fillRect(0,0,r,m);b.fillStyle=f;b.fillText(g(h)+\" \"+e+\" (\"+g(c)+\"-\"+g(k)+\")\",t,v);b.drawImage(q,d+a,m,n-a,p,d,m,n-a,p);b.fillRect(d+n-a,m,a,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d+n-a,m,a,g((1-h/w)*p))}}};return f});\n\n//# sourceURL=webpack:///./js/stats.min.js?");
-
-/***/ }),
-
-/***/ "./js/three.js":
-/*!*********************!*\
-  !*** ./js/three.js ***!
-  \*********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var _stats_min__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stats.min */ \"./js/stats.min.js\");\n/* harmony import */ var _stats_min__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_stats_min__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nconst scene = new three__WEBPACK_IMPORTED_MODULE_0__[\"Scene\"]();\nconst camera = new three__WEBPACK_IMPORTED_MODULE_0__[\"PerspectiveCamera\"](75, window.innerWidth / window.innerHeight, 0.1, 1000);\n\nconst renderer = new three__WEBPACK_IMPORTED_MODULE_0__[\"WebGLRenderer\"]();\nrenderer.setSize(window.innerWidth, window.innerHeight);\ndocument.body.appendChild(renderer.domElement);\n\nconst geometry = new three__WEBPACK_IMPORTED_MODULE_0__[\"BoxGeometry\"](1, 1, 1);\nconst material = new three__WEBPACK_IMPORTED_MODULE_0__[\"MeshBasicMaterial\"]({ color: 0x00ff00});\nconst cube = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"](geometry, material);\nscene.add(cube);\ncamera.position.z = 5;\n\nconst lineMaterial = new three__WEBPACK_IMPORTED_MODULE_0__[\"LineBasicMaterial\"]( {color: 0x0000ff} );\nconst lineGeometry = new three__WEBPACK_IMPORTED_MODULE_0__[\"Geometry\"]();\nlineGeometry.vertices.push(new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector3\"](-1, 0, 0));\nlineGeometry.vertices.push(new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector3\"](0, 1, 0));\nlineGeometry.vertices.push(new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector3\"](1, 0, 0));\nconst line = new three__WEBPACK_IMPORTED_MODULE_0__[\"Line\"](lineGeometry, lineMaterial);\nscene.add(line);\n\nconst stat = new _stats_min__WEBPACK_IMPORTED_MODULE_1__();\nstat.domElement.style.position = 'absolute';\nstat.domElement.style.right = '0px';\nstat.domElement.style.top = '0px';\ndocument.body.appendChild(stat.domElement);\n\nfunction animatie() {\n  stat.begin();\n  requestAnimationFrame( animatie );\n  cube.rotation.x += 0.01;\n  cube.rotation.y += 0.01;\n  renderer.render( scene, camera );\n  stat.end();\n}\n\nanimatie();\n\n//# sourceURL=webpack:///./js/three.js?");
 
 /***/ }),
 

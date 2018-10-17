@@ -1,5 +1,5 @@
 module.exports = {
-  entry: __dirname + "/js/three.js",
+  entry: __dirname + "/js/fallenBall.js",
   output: {
       path: __dirname,
       filename: "main.js"
