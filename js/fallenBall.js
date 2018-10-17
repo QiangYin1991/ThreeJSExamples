@@ -2,7 +2,7 @@
  * @Description: Fallen ball
  * @Author: QiangYin
  * @Date: 2018-10-17 11:26:54
- * @LastEditTime: 2018-10-17 13:11:34
+ * @LastEditTime: 2018-10-17 15:23:40
  * @LastEditors: your name
  */
 import * as THREE from 'three';
@@ -11,13 +11,18 @@ import * as Stats from './stats.min';
 const container = document.getElementById('ThreeJS');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-//const camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
 const renderer = new THREE.WebGLRenderer();
 const stat = new Stats();
 
 let id = null;
 let ballMesh = null;
 let ballRadius = 0.5;
+
+let isMoving = true;
+let maxHeight = 5;  // the init height of ball
+let velocity = 0;   // the velocity of ball
+let acc = -0.01;   // accelerated velocity of ball
+
 
 function init () {
   /** init stat */
@@ -39,7 +44,7 @@ function init () {
   /** set ball */
   ballMesh = new THREE.Mesh(new THREE.SphereGeometry(ballRadius, 16, 8), 
                             new THREE.MeshLambertMaterial({color: 0xffff00}));
-  ballMesh.position.y = ballRadius;
+  ballMesh.position.y = ballRadius + maxHeight;
   scene.add(ballMesh);
 
   /** set plane */
@@ -66,6 +71,22 @@ function init () {
 
 function draw () {
   stat.begin();
+
+  if (isMoving) {
+    ballMesh.position.y += velocity;
+    velocity += acc;
+
+    if (velocity < 0 && ballMesh.position.y <= ballRadius) {
+      // hit plane
+      velocity = -velocity * 0.8;
+    }
+
+    if (Math.abs(velocity) < 10e-5) {
+      isMoving = false;
+      ballMesh.position.y = ballRadius;   // set ball on the plane
+    }
+  }
+
   renderer.render(scene, camera);
   id = requestAnimationFrame(draw);
   stat.end();
@@ -76,6 +97,11 @@ function stop () {
     cancelAnimationFrame(id);
     id = null;
   }
+};
+
+function drop () {
+  isMoving = true;
+  ballMesh.position.y = maxHeight;
 };
 
 init();
