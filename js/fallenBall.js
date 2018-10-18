@@ -64,9 +64,17 @@ function init () {
   scene.add(plane);
 
   /** set light */
-  let light = new THREE.DirectionalLight(0xffffff);
-  light.position.set(10, 10, 15);
-  scene.add(light);
+  var light = new THREE.PointLight(0xffffff);
+	light.position.set(0,250,0);
+	scene.add(light);
+  //scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
+
+  /** set sky box*/
+  var skyBoxGeometry = new THREE.BoxGeometry( 100, 100, 100 );
+	// BackSide: render faces from inside of the cube, instead of from outside (default).
+	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff, side: THREE.BackSide } );
+	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+	scene.add(skyBox);
 
   id = requestAnimationFrame(draw);
 };
