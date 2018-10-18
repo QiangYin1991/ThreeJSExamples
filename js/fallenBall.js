@@ -64,17 +64,22 @@ function init () {
   scene.add(plane);
 
   /** set light */
-  var light = new THREE.PointLight(0xffffff);
+  let light = new THREE.PointLight(0xffffff);
 	light.position.set(0,250,0);
 	scene.add(light);
   //scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
 
   /** set sky box*/
-  var skyBoxGeometry = new THREE.BoxGeometry( 100, 100, 100 );
+  let skyBoxGeometry = new THREE.BoxGeometry( 100, 100, 100 );
 	// BackSide: render faces from inside of the cube, instead of from outside (default).
-	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff, side: THREE.BackSide } );
-	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+	let skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff, side: THREE.BackSide } );
+	let skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
 	scene.add(skyBox);
+
+  // create a set of coordinate axes to help orient user
+  //    specify length in pixels in each direction
+  let axis = new THREE.AxesHelper(7);
+  scene.add(axis);
 
   id = requestAnimationFrame(draw);
 };
