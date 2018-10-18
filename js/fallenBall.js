@@ -7,12 +7,14 @@
  */
 import * as THREE from 'three';
 import * as Stats from './stats.min';
+import * as OrbitControls from 'three-orbitcontrols';
 
 const container = document.getElementById('ThreeJS');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
 const stat = new Stats();
+const controls = new OrbitControls(camera, renderer.domElement);
 
 let id = null;
 let ballMesh = null;
@@ -90,6 +92,7 @@ function draw () {
   renderer.render(scene, camera);
   id = requestAnimationFrame(draw);
   stat.end();
+  controls.update();
 };
 
 function stop () {

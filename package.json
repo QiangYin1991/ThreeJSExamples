@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "three": "^0.97.0"
+    "three": "^0.97.0",
+    "three-orbitcontrols": "^2.96.3"
   }
 }
