@@ -59,15 +59,16 @@ function init () {
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   texture.repeat.set(4, 4);
   let plane = new THREE.Mesh(new THREE.PlaneGeometry(5, 5),
-                             new THREE.MeshLambertMaterial({map:texture}));
-  plane.rotation.x = -Math.PI / 2;
+                             new THREE.MeshLambertMaterial({map:texture, side:THREE.DoubleSide}));
+  plane.rotation.x = Math.PI / 2;
   scene.add(plane);
 
   /** set light */
   let light = new THREE.PointLight(0xffffff);
 	light.position.set(0,250,0);
 	scene.add(light);
-  //scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
+  let ambientLight = new THREE.AmbientLight(0x333333);
+  scene.add(ambientLight);
 
   /** set sky box*/
   let skyBoxGeometry = new THREE.BoxGeometry( 100, 100, 100 );
