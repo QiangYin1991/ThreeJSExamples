@@ -2,7 +2,7 @@
  * @Author: QiangYin
  * @Date: 2018-10-21 17:40:54
  * @LastEditors: QiangYin
- * @LastEditTime: 2018-10-21 21:14:45
+ * @LastEditTime: 2018-10-21 21:51:47
  * @Description: This is simple template for threejs project
  */
 import * as THREE from 'three';
@@ -57,6 +57,17 @@ function initObject () {
   floor.position.y = -0.5;
   floor.rotation.x = Math.PI / 2;
   scene.add(floor);
+
+  let skyBoxGeometry = new THREE.BoxGeometry(10000, 10000, 10000);
+  let skyBoxMaterial = new THREE.MeshBasicMaterial({color:0x9999ff, side: THREE.BackSide});
+  let skyBox = new THREE.Mesh(skyBoxGeometry, skyBoxMaterial);
+  scene.add(skyBox);
+
+  let geometry = new THREE.SphereGeometry(30, 32, 16);
+  let material = new THREE.MeshLambertMaterial({color: 0x000088});
+  mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(0, 40, 0);
+  scene.add(mesh);
 };
 
 function animate () {
