@@ -2,7 +2,7 @@
  * @Author: QiangYin
  * @Date: 2018-10-21 17:40:54
  * @LastEditors: QiangYin
- * @LastEditTime: 2018-10-21 18:53:14
+ * @LastEditTime: 2018-10-21 21:14:45
  * @Description: This is simple template for threejs project
  */
 import * as THREE from 'three';
@@ -31,11 +31,52 @@ function init () {
   container = document.getElementById('ThreeJS');
   container.appendChild(renderer.domElement);
 
+  let light = new THREE.PointLight(0xffffff);
+  light.position.set(100, 250, 100);
+  scene.add(light);
+
+  initObject();
+
   // Controls and Stats
   controls = new OrbitControls(camera, renderer.domElement);
   stats = new Stats();
-  stat.domElement.style.position = 'absolute';
-  stat.domElement.style.right = '0px';
-  stat.domElement.style.top = '0px';
-  container.appendChild(stat.domElement);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.right = '0px';
+  stats.domElement.style.top = '0px';
+  container.appendChild(stats.domElement);
 };
+
+function initObject () {
+  let loader = new THREE.TextureLoader();
+  let floorTexture = loader.load('img/checkerboard.jpg');
+  floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+  floorTexture.repeat.set(10, 10);
+  let floorMaterial = new THREE.MeshBasicMaterial({map: floorTexture, side: THREE.DoubleSide});
+  let floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+  let floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  floor.position.y = -0.5;
+  floor.rotation.x = Math.PI / 2;
+  scene.add(floor);
+};
+
+function animate () {
+  requestAnimationFrame(animate);
+  render();
+  update();
+};
+
+function update () {
+  controls.update();
+  stats.update();
+};
+
+function render () {
+  renderer.render(scene, camera);
+};
+
+function __main__ () {
+  init();
+  animate();
+}
+
+__main__();
