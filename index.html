@@ -9,7 +9,17 @@
 		</style>
 	</head>
 	<body>
+    <div id="infoButton">
+      <button onclick="clickBtn()" style="z-index:2;position:absolute; top:4px; left:400px;
+        background: url(img/icon-info.png); width: 50px; height: 50px;border: none;background-repeat: no-repeat">
+      </button>
+    </div>
     <div id="ThreeJS" style="z-index: 1; position: absolute; left:0px; top:0px"></div>
     <script src="main.js"></script>
+    <script>
+      function clickBtn() {
+        alert("Click info button");
+      }
+    </script>
 	</body>
 </html>
