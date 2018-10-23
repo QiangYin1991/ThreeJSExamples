@@ -1,5 +1,5 @@
 module.exports = {
-  entry: __dirname + "/js/template.js",
+  entry: __dirname + "/js/colorExplorer.js",
   output: {
       path: __dirname,
       filename: "main.js"
